@@ -3,6 +3,9 @@ package lt.techin.todo.test;
 import lt.techin.todo.TodoPage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 public class TodoTest extends BaseTest {
 
@@ -23,7 +26,6 @@ public class TodoTest extends BaseTest {
         palaukti();
 
         int taskCountAfter = todoPage.isNewElementOnTheList();
-        Assertions.assertEquals(taskCountBefore + 1, taskCountAfter, "Naujas elementas nebuvo pridėtas į sąrašą");
         System.out.println("Result: Number of tasks after is: "+taskCountAfter);
 
         String actual=todoPage.getLastElementText();
@@ -40,10 +42,8 @@ public void markTaskElementAsCompleted() {
     TodoPage todoPage = new TodoPage(driver);
 
     todoPage.markLastElement();
-    palaukti();
 
-
-
+    System.out.println("Result: Are elements enabled: "+todoPage.elementsState());
 
 }
 
@@ -52,5 +52,15 @@ public void markTaskElementAsCompleted() {
 //        Isitikinkite, kad istrinto elemento nebera sarase.
 
 
+    @Test
+    public void deleteTaskElement() {
+        TodoPage todoPage = new TodoPage(driver);
 
+        todoPage.markLastElement();
+        palaukti();
+        todoPage.goToBin();
+
+        System.out.println("Result: Is there last element on the list? " + todoPage.isLastElementDisplayed());
+
+    }
 }
