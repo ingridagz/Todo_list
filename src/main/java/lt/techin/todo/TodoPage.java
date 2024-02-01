@@ -10,7 +10,6 @@ import java.util.List;
 
 public class TodoPage extends BasePage {
 
-
     public TodoPage(WebDriver driver) {
         super(driver);
     }
@@ -23,27 +22,25 @@ public class TodoPage extends BasePage {
         inputTodoText.sendKeys(newItemText);
         inputTodoText.sendKeys(Keys.ENTER);
     }
-
     @FindBy(xpath = "//div[@id='container']/ul/li[last()]")
     WebElement lastItem;
 
     public String getLastElementText() {
         return lastItem.getText();
     }
-
     @FindBy(css = "ul > li")
     List<WebElement> elements;
 
     public int isNewElementOnTheList() {
         return elements.size();
     }
-
-
     //2.
     public void markLastElement() {
         lastItem.click();
     }
-
+    public boolean isElementCompleted() {
+        return lastItem.getAttribute("class").contains("completed");
+    }
     public boolean elementsState() {
         for (WebElement element : elements) {
             if (!element.isEnabled()) {
@@ -52,20 +49,23 @@ public class TodoPage extends BasePage {
         }
         return true;
     }
-
-
     //3.
     @FindBy(css = ".completed .fa-trash")
     WebElement bin;
 
-    public void goToBin() {
+    public void toBin() {
         Actions goTo = new Actions(driver);
         goTo.moveToElement(bin).perform();
         bin.click();
     }
 
-    public boolean isLastElementDisplayed() {
-        return lastItem.isDisplayed();
+    public boolean isElementInList(String deletedElementText) {
+        for (WebElement element : elements) {
+            if (element.getText().equals(deletedElementText)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 

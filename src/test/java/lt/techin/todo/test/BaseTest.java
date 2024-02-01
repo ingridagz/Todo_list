@@ -17,15 +17,12 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get("https://webdriveruniversity.com/To-Do-List/index.html");
     }
-
     public static void palaukti() {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
         }
     }
-
-
     @AfterEach
     void tearDown() {
 //        driver.quit();
